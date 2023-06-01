@@ -1,7 +1,7 @@
 # A simple introduction to LLM_Water
 
 LLM_Water is an application mainly based on [LangChain_ChatGLM](https://github.com/imClumsyPanda/langchain-ChatGLM/tree/master). It mainly focus on the QA function, based on knowledge base about water conservancy. For now, there aren't enough changes from Langchain_ChatGLM. So if you'd like to learn about how it works logically, I suggest you click the open link above. This README file is mainly focus on the way to use it and the work I need to go on.
-# Installation
+# Install
 
 Make sure your Python version is at least higher than 3.8.
 
