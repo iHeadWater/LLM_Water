@@ -15,11 +15,11 @@ If your version is less than Python 3.8, you need to update it or create a virtu
 conda create -p /your_path/env_name python=3.8
 
 # activate
+# In some servers, you may need to do "source activate base" first
 source activate /your_path/env_name
 pip3 install --upgrade pip
 
 # deactivate
-# In some servers, you may need to do "source activate base" first
 source deactivate /your_path/env_name
 
 # remove
