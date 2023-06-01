@@ -113,8 +113,11 @@ python cli_demo.py
 Run the webui.py
 ```Python
 python webui.py
+```
 
-#if you have mutiple GPU services and you'd like to run on specific GPU, try this
+If you have mutiple GPU services and you'd like to run on specific GPU, try this.
+
+```Python
 nvidia-smi
 CUDA_VISIBLE_DEVICES=1 python webui.py
 
