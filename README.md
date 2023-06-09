@@ -137,3 +137,4 @@ The documents you upload will be stored in content folder. And the processed ind
 Create and combine Agents and Chains/Tools
 Test the accuracy when there are a large amount of documents.
 Accelerate the generation of ChatGLM
+Replace FAISS with Milvus
