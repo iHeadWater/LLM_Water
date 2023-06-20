@@ -158,7 +158,7 @@ class LocalDocQA:
             if vs_name in vs_list:
                 vector_store = Milvus(embedding_function = self.embeddings,
                                       collection_name = vs_name,
-                                      connection_args={"host": "10.48.0.92", "port": "19530"},
+                                      connection_args={"host": "localhost", "port": "19530"},
                                      )
                 vector_store.add_documents(docs)
                 torch_gc()
@@ -169,7 +169,7 @@ class LocalDocQA:
                     docs,
                     embedding = self.embeddings,
                     collection_name = vs_name,
-                    connection_args={"host": "10.48.0.92", "port": "19530"},
+                    connection_args={"host": "localhost", "port": "19530"},
                 )
                 torch_gc()
             return vs_name, loaded_files
@@ -193,14 +193,14 @@ class LocalDocQA:
             if os.path.isdir(vs_name):
                 vector_store = Milvus(embedding_function = self.embeddings,
                                       collection_name = vs_name,
-                                      connection_args={"host": "10.48.0.92", "port": "19530"},
+                                      connection_args={"host": "localhost", "port": "19530"},
                                      )
                 vector_store.add_documents(documents = docs)
             else:
                 vector_store = Milvus.from_documents(
                     docs,
                     embeddings,
-                    connection_args={"host": "10.48.0.92", "port": "19530"},
+                    connection_args={"host": "localhost", "port": "19530"},
                 )
             torch_gc()
             return vs_name, [one_title]
@@ -215,7 +215,7 @@ class LocalDocQA:
                                                 model_kwargs={'device': embedding_device})
         vector_store = Milvus(embedding_function = self.embeddings,
                                       collection_name = vs_name,
-                                      connection_args={"host": "10.48.0.92", "port": "19530"},
+                                      connection_args={"host": "localhost", "port": "19530"},
                                      )
         vector_store.chunk_size = self.chunk_size
         vector_store.chunk_conent = self.chunk_conent
@@ -250,7 +250,7 @@ class LocalDocQA:
                                                 model_kwargs={'device': embedding_device})
         vector_store = Milvus(embedding_function = self.embeddings,
                                       collection_name = vs_name,
-                                      connection_args={"host": "10.48.0.92", "port": "19530"},
+                                      connection_args={"host": "localhost", "port": "19530"},
                                      )
         vector_store.chunk_conent = chunk_conent
         vector_store.score_threshold = score_threshold
