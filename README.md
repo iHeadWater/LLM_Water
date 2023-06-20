@@ -15,11 +15,11 @@ If your version is less than Python 3.8, you need to update it or create a virtu
 conda create -p /your_path/env_name python=3.8
 
 # activate
-# In some servers, you may need to do "source activate base" first
 source activate /your_path/env_name
 pip3 install --upgrade pip
 
 # deactivate
+# In some servers, you may need to do "source activate base" first
 source deactivate /your_path/env_name
 
 # remove
@@ -68,6 +68,77 @@ docker run --gpus all -d --name chatglm -p 7860:7860  chatglm-cuda:latest
 # offline
 docker run --gpus all -d --name chatglm -p 7860:7860 -v ~/github/langchain-ChatGLM:/chatGLM  chatglm-cuda:latest
 ```
+
+# Optional
+Milvus can be used to replace FAISS as the vector store.
+
+Here are the ways to install docker and docker-compose.
+And if you have podman on your server, you can use podman and podman-compose to replace docker.
+
+## Install Docker and docker-compose
+Create a new HTTPS software source.
+```python
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+```
+Get GPG Key.
+```python
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+```
+Put Docker in your system.
+```python
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+```
+Install Docker.
+```python
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io
+```
+Vertify your installation.
+```Python
+sudo systemctl status docker
+docker -v
+```
+Give your user the permission.
+```python
+sudo groupadd docker
+sudo gpasswd -a [Your User Name] docker
+sudo systemctl restart docker
+```
+Install Docker Compose
+```python
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+Make it able to run.
+```python
+sudo chmod +x /usr/local/bin/docker-compose
+```
+Vertify.
+```python
+docker-compose --version
+```
+
+## Run Milvus
+Get docker-compose file.
+```python
+wget https://github.com/milvus-io/milvus/releases/download/v2.2.10/milvus-standalone-docker-compose.yml -O docker-compose.yml
+```
+Run.
+```python
+sudo docker-compose up -d
+sudo docker-compose ps
+sudo docker-compose down
+```
+
+If you'd like to run with podman, use this.
+```python
+mv docker-compose.yml podman-compose.yml
+sudo podman-compose up -d
+sudo podman-compose ps
+sudo podman-compose down
+```
+
+
 # How To Use
 First, check configs/model_config.py to make sure your server is capable to run.
 Model     | Minimum GPU Memory| Minimum GPU Memory for Finetune
@@ -113,13 +184,6 @@ python cli_demo.py
 Run the webui.py
 ```Python
 python webui.py
-```
-
-If you have mutiple GPU services and you'd like to run on specific GPU, try this.
-
-```Python
-nvidia-smi
-CUDA_VISIBLE_DEVICES=1 python webui.py
 
 #output
 Running on local URL:  http://0.0.0.0:7861
@@ -137,4 +201,3 @@ The documents you upload will be stored in content folder. And the processed ind
 Create and combine Agents and Chains/Tools
 Test the accuracy when there are a large amount of documents.
 Accelerate the generation of ChatGLM
-Replace FAISS with Milvus
