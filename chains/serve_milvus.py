@@ -21,7 +21,6 @@ import models.shared as shared
 from agent import bing_search
 from langchain.docstore.document import Document
 
-
 def load_file(filepath, sentence_size=SENTENCE_SIZE):
     if filepath.lower().endswith(".md"):
         loader = UnstructuredFileLoader(filepath, mode="elements")
