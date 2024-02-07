@@ -17,9 +17,6 @@ conda create -p /your_path/env_name python=3.8
 # activate
 conda activate /your_path/env_name
 
-# remove
-conda env remove -p  /your_path/env_name
-
 # install
 git clone https://github.com/imClumsyPanda/langchain-ChatGLM.git
 cd langchain-ChatGLM
