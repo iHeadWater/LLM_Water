@@ -15,34 +15,15 @@ If your version is less than Python 3.8, you need to update it or create a virtu
 conda create -p /your_path/env_name python=3.8
 
 # activate
-source activate /your_path/env_name
-pip3 install --upgrade pip
-
-# deactivate
-# In some servers, you may need to do "source activate base" first
-source deactivate /your_path/env_name
+conda activate /your_path/env_name
 
 # remove
 conda env remove -p  /your_path/env_name
-```
-Then, before pip the packages, you need to check if you have uninstalled detectron2. It might cause some conflicts.
-
-```python
-# check
-pip show detectron2
-pip uninstall detectron2
 
 # install
 git clone https://github.com/imClumsyPanda/langchain-ChatGLM.git
 cd langchain-ChatGLM
-```
-Here are two packages recommended to be installed by LangChain-ChatGLM.
-But actually I don't have the permission to use ‘yum’ in our company server, and this application still works well.
 
-```python
-yum install libX11
-yum install libXext
-```
 Install packages.
 ```python
 pip install -r requirements.txt
@@ -51,72 +32,12 @@ pip install "unstructured[local-inference]"
 pip install "detectron2@git+https://github.com/facebookresearch/detectron2.git@v0.6#egg=detectron2"
 pip install layoutparser[layoutmodels,tesseract]
 ```
-It will be a little bit difficult to install the version that *requirements.txt* acquires. Even if this model is developed by Tsinghua University, you can't download the versions from  their mirror source. Just search these packages on the official website of the packages.
-
-LangChain-ChatGLM also gives a way of docker installation.(I haven't tested it for the same reason, no root permission.)
-
-```python
-sudo apt-get update
-sudo apt-get install -y nvidia-container-toolkit-base
-sudo systemctl daemon-reload 
-sudo systemctl restart docker
-
-# online
-docker build -f Dockerfile-cuda -t chatglm-cuda:latest .
-docker run --gpus all -d --name chatglm -p 7860:7860  chatglm-cuda:latest
-
-# offline
-docker run --gpus all -d --name chatglm -p 7860:7860 -v ~/github/langchain-ChatGLM:/chatGLM  chatglm-cuda:latest
-```
 
 # Optional
 Milvus can be used to replace FAISS as the vector store.
 
 Here are the ways to install docker and docker-compose.
 And if you have podman on your server, you can use podman and podman-compose to replace docker.
-
-## Install Docker and docker-compose
-Create a new HTTPS software source.
-```python
-sudo apt update
-sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-```
-Get GPG Key.
-```python
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-```
-Put Docker in your system.
-```python
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-```
-Install Docker.
-```python
-sudo apt update
-sudo apt install docker-ce docker-ce-cli containerd.io
-```
-Vertify your installation.
-```Python
-sudo systemctl status docker
-docker -v
-```
-Give your user the permission.
-```python
-sudo groupadd docker
-sudo gpasswd -a [Your User Name] docker
-sudo systemctl restart docker
-```
-Install Docker Compose
-```python
-sudo curl -L "https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-```
-Make it able to run.
-```python
-sudo chmod +x /usr/local/bin/docker-compose
-```
-Vertify.
-```python
-docker-compose --version
-```
 
 ## Run Milvus
 Get docker-compose file.
